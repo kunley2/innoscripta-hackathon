@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %} Home{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Company search</h5>
+
+              <!-- Vertical Form -->
+              <form class="row g-3" method="POST" action="/company">
+                <div class="col-12">
+                  <label for="company" class="form-label">Company Name</label>
+                  <input type="text" class="form-control" id="company" name="company">
+                </div>
+                <div class="col-12">
+                  <label for="country_selector" class="form-label">Country</label>
+                  <input type="text" class="form-control" id="country_selector" name="country"> 
+                </div>
+                <!-- <div class="form-item" style="display:none;">
+                    <input type="text" id="country_selector_code" name="country_selector_code" data-countrycodeinput="1" readonly="readonly" placeholder="Selected country code will appear here" />
+                    <label for="country_selector_code">...and the selected country code will be updated here</label>
+                </div> -->
+                <div class="col-12">
+                  <label for="link" class="form-label">Url</label>
+                  <input type="text" class="form-control" id="link" placeholder="www.google.com" name="'link">
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+              </form><!-- Vertical Form -->
+
+            </div>
+          </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    $("#country_selector").countrySelect();
+
+</script>
+{% endblock scripts %}
