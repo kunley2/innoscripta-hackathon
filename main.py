@@ -16,9 +16,9 @@ api_route = '/api/v1'
 
 @api.post(f'{api_route}/company')
 async def company(company:str,country:str,url:Optional[str]=None):
-    print(url)
-    result = lang_chain(company,country)
-    return result
+    # print(url)
+    # result = lang_chain(company,country)
+    return {'result':'hello'}
 
 
 if __name__ == '__main__':

@@ -26,4 +26,4 @@ def out():
         print(company)
         result = lang_chain(company=company.replace(' ','-'),country=country)
         print(result)
-    return render_template('output.html',result)
+    return render_template('output.html',result=result)
