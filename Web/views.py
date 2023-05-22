@@ -14,6 +14,7 @@ def index():
         print(company)
         result = lang_chain(company=company,country=country)
         print(result)
+        return {'result':result}
     return render_template('index.html')
 
 

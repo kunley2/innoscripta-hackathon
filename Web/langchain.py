@@ -12,8 +12,9 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 
-openai_api_key = os.getenv("OPEN_API_KEY")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 serp_key = os.getenv("SERP_API_KEY")
+
 
 def output_value(result):
     value = list(map(lambda x:x['result'],result))
