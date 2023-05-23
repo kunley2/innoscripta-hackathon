@@ -14,6 +14,7 @@ import os
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 serp_key = os.getenv("SERP_API_KEY")
+print(serp_key)
 
 
 def output_value(result):
@@ -54,10 +55,10 @@ def lang_chain(company,country,api_key=serp_key):
       )
   # URMMM  look at this prompt and see if you can help out
   question = ["i want you to give me a brief overview of the company ",
-  "the company's products or services.",
+  "What are the main products or services associated with the company",
   "the keywords particular to the company, return 'empty' if can't be found",
   "the company's picture, return 'empty' if can't be found",
-  "the company address, return 'empty' if can't be found",]
-  result = chain.apply(question,)
+  "the company location or address, return 'empty' if can't be found",]
+  result = chain.apply(question)
   data = output_value(result)
   return data

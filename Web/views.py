@@ -11,7 +11,6 @@ def index():
         company = request.form.get('company')
         country = request.form.get('country')
         link = request.form.get('link')
-        print(company)
         result = lang_chain(company=company,country=country)
         print(result)
         return {'result':result}
@@ -24,7 +23,7 @@ def out():
         company = request.form.get('company')
         country = request.form.get('country')
         link = request.form.get('link')
-        print(company)
-        result = lang_chain(company=company.replace(' ','-'),country=country)
+        # result = lang_chain(company=company.replace(' ','-'),country=country)
+        result = {'overview':'suck my dick','products':'brandteon'}
         print(result)
-    return render_template('output.html',result=result)
+    return render_template('output.html',result=result,company=company)

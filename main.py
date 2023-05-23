@@ -2,8 +2,6 @@ from Web import create_app
 # from fastapi import FastAPI
 # from fastapi.middleware.wsgi import WSGIMiddleware
 # import uvicorn
-from typing import Optional
-from Web.langchain import lang_chain
 
 # api = FastAPI()
 flask_app = create_app()

@@ -2,5 +2,5 @@ env
 env*
 .env
 .gitignore
-__pycache__
-.chroma
+__pycache__/
+.chroma/
