@@ -24,6 +24,6 @@ def out():
         country = request.form.get('country')
         link = request.form.get('link')
         # result = lang_chain(company=company.replace(' ','-'),country=country)
-        result = {'overview':'suck my dick','products':'brandteon'}
+        result = {'overview':f'{company}','products':'brandteon'}
         print(result)
     return render_template('output.html',result=result,company=company)

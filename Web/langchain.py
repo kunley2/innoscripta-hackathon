@@ -14,7 +14,6 @@ import os
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 serp_key = os.getenv("SERP_API_KEY")
-print(serp_key)
 
 
 def output_value(result):
