@@ -7,10 +7,15 @@ from langchain.schema import AgentAction, AgentFinish
 from langchain.memory import ConversationBufferWindowMemory
 import re
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 #setup tools
-
 from langchain import OpenAI, SerpAPIWrapper, LLMChain
+
+
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 os.environ["SERPAPI_API_KEY"] = "3ecbf05c8be8ee4d8f17efef348854f1922f61ee30462f53c6f400ac3466a2cd"
 
@@ -27,7 +32,7 @@ tools = [
 
 #prompt_template
 # Set up the base template
-template_with_history = """Answer the following questions as best you can, but speaking as a pirate might speak. You have access to the following tools:
+template_with_history = """Answer the following questions as best you can. You have access to the following tools:
 
 {tools}
 
@@ -42,7 +47,6 @@ Observation: the result of the action
 Thought: I now know the final answer
 Final Answer: the final answer to the original input question
 
-Begin! Remember to speak as a pirate when giving your final answer. Use lots of "Arg"s
 
 Previous conversation history:
 {history}
@@ -109,26 +113,39 @@ class CustomOutputParser(AgentOutputParser):
         return AgentAction(tool=action, tool_input=action_input.strip(" ").strip('"'), log=llm_output)
 
 
-output_parser = CustomOutputParser()
 
-#setup llm
-os.environ["OPENAI_API_KEY"] = "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"
+def lang_model(company,country,openai_key=openai_api_key):
+    output_parser = CustomOutputParser()
 
-llm = OpenAI(temperature=0)
+    #setup llm
+    os.environ["OPENAI_API_KEY"] = openai_key
 
-# LLM chain consisting of the LLM and a prompt
-llm_chain = LLMChain(llm=llm, prompt=prompt_with_history)
+    llm = OpenAI(temperature=0)
 
-tool_names = [tool.name for tool in tools]
-agent = LLMSingleActionAgent(
-    llm_chain=llm_chain, 
-    output_parser=output_parser,
-    stop=["\nObservation:"], 
-    allowed_tools=tool_names
-)
+    # LLM chain consisting of the LLM and a prompt
+    llm_chain = LLMChain(llm=llm, prompt=prompt_with_history)
 
-memory=ConversationBufferWindowMemory(k=2)
+    tool_names = [tool.name for tool in tools]
+    agent = LLMSingleActionAgent(
+        llm_chain=llm_chain, 
+        output_parser=output_parser,
+        stop=["\nObservation:"], 
+        allowed_tools=tool_names
+    )
 
-agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True, memory=memory)
-agent_executor.run("what are the main products of amazon.com Inc in United States?")
-agent_executor.run("Could you give me some url of images of these products?")
+    memory=ConversationBufferWindowMemory(k=2)
+
+    agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=False, memory=memory)
+    products = agent_executor.run(f"what are the main products or services of {company} in {country}")
+    overview = agent_executor.run("A brief overview")
+    keywords = agent_executor.run("the most important keywords, return 'empty' if can't be found")
+    image = agent_executor.run("The image url, return 'empty' if can't be found")
+    location = agent_executor.run("The location or address, return 'empty' if can't be found")
+    data = {
+        'overview':overview,
+        'products':products,
+        'keywords':keywords,
+        'image':image,
+        'address':location
+    }
+    return data

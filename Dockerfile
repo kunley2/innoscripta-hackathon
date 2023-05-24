@@ -7,8 +7,9 @@ RUN pip install langchain==0.0.177
 RUN pip install openai 
 RUN pip install chromadb
 RUN pip install flask
-RUN pip install tiktoken
+# RUN pip install tiktoken
 RUN pip install bs4
+RUN pip install google-search-results
 
 # RUN pip install gunicorn[gevent]
 

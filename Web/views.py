@@ -1,5 +1,6 @@
 from flask import Blueprint,render_template,request,redirect
 from .langchain import lang_chain
+from .manel import lang_model
 
 
 views = Blueprint('views',__name__)
@@ -11,9 +12,7 @@ def index():
         company = request.form.get('company')
         country = request.form.get('country')
         link = request.form.get('link')
-        result = lang_chain(company=company,country=country)
-        print(result)
-        return {'result':result}
+        result = {'overview':f'{company}index','products':'trendteon'}
     return render_template('index.html')
 
 
@@ -23,7 +22,7 @@ def out():
         company = request.form.get('company')
         country = request.form.get('country')
         link = request.form.get('link')
-        # result = lang_chain(company=company.replace(' ','-'),country=country)
-        result = {'overview':f'{company}','products':'brandteon'}
-        print(result)
+        result = lang_model(company=company.replace(' ','-'),country=country)
+        # result = {'overview':f'{company}','products':'brandteon'}
+        # print(result)
     return render_template('output.html',result=result,company=company)
