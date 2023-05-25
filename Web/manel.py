@@ -7,24 +7,12 @@ from langchain.schema import AgentAction, AgentFinish
 from langchain.memory import ConversationBufferWindowMemory
 import re
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 #setup tools
 from langchain import OpenAI, SerpAPIWrapper, LLMChain
 from langchain import OpenAI, GoogleSearchAPIWrapper, LLMChain
-#os.environ["OPENAI_API_KEY"] = "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"
-#os.environ["GOOGLE_CSE_ID"] = "d401c14d00fb84085"
-#os.environ["GOOGLE_API_KEY"] = "AIzaSyB8L0bfzt1stmY2kddYi9Rb3HFIrEk1Pmk"
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
-openai_api_key = os.getenv("OPENAI_API_KEY")
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
-print(openai_api_key)
-os.environ["GOOGLE_CSE_ID"] = os.getenv('GOOGLE_CSE_ID')
-os.environ["GOOGLE_API_KEY"] = os.getenv('GOOGLE_API_KEY')
 #os.environ["SERPAPI_API_KEY"] = os.getenv('SERP_API_KEY')
 
 # Define which tools the agent can use to answer user queries
@@ -122,7 +110,11 @@ class CustomOutputParser(AgentOutputParser):
 
 
 
-def lang_model(company,country,openai_key=openai_api_key):
+
+def lang_model(company,country,openai_key,google_cse_id,google_api_key):
+
+    os.environ["GOOGLE_CSE_ID"] = google_cse_id
+    os.environ["GOOGLE_API_KEY"] = google_api_key
     output_parser = CustomOutputParser()
 
     #setup llm
@@ -148,12 +140,12 @@ def lang_model(company,country,openai_key=openai_api_key):
     products = agent_executor.run("what are the main products or services of")
     keywords = agent_executor.run("the most important keywords, return 'empty' if can't be found")
     # image = agent_executor.run("The image url, return 'empty' if can't be found")
-    location = agent_executor.run("The location or address, return 'empty' if can't be found")
+    # location = agent_executor.run("The location or address, return 'empty' if can't be found")
     data = {
         'overview':overview,
         'products':products,
         'keywords':keywords,
         # 'image':image,
-        'address':location
+        # 'address':location
     }
     return data

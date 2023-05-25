@@ -10,7 +10,7 @@ RUN pip install flask
 RUN pip install tiktoken
 RUN pip install bs4
 RUN pip install google-search-results
-RUN pip install fastapi
+RUN pip install fastapi google-api-python-client
 
 # RUN pip install gunicorn[gevent]
 
