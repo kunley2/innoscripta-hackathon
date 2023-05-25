@@ -15,9 +15,9 @@ load_dotenv()
 from langchain import OpenAI, SerpAPIWrapper, LLMChain
 
 
-openai_api_key = "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"
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
-os.environ["SERPAPI_API_KEY"] = "3ecbf05c8be8ee4d8f17efef348854f1922f61ee30462f53c6f400ac3466a2cd"
+os.environ["SERPAPI_API_KEY"] = os.getenv('SERP_API_KEY')
 
 # Define which tools the agent can use to answer user queries
 search = SerpAPIWrapper()
@@ -118,7 +118,7 @@ def lang_model(company,country,openai_key=openai_api_key):
     output_parser = CustomOutputParser()
 
     #setup llm
-    os.environ["OPENAI_API_KEY"] = "openai_key"
+    os.environ["OPENAI_API_KEY"] = openai_key
 
     llm = OpenAI(temperature=0)
 
@@ -136,16 +136,16 @@ def lang_model(company,country,openai_key=openai_api_key):
     memory=ConversationBufferWindowMemory(k=2)
 
     agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=False, memory=memory)
-    products = agent_executor.run(f"what are the main products or services of {company} in {country}")
-    overview = agent_executor.run("A brief overview")
+    overview = agent_executor.run(f"A brief overview of the company {company} in {country}")
+    products = agent_executor.run("what are the main products or services of")
     keywords = agent_executor.run("the most important keywords, return 'empty' if can't be found")
-    image = agent_executor.run("The image url, return 'empty' if can't be found")
+    # image = agent_executor.run("The image url, return 'empty' if can't be found")
     location = agent_executor.run("The location or address, return 'empty' if can't be found")
     data = {
         'overview':overview,
         'products':products,
         'keywords':keywords,
-        'image':image,
+        # 'image':image,
         'address':location
     }
     return data
