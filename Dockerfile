@@ -13,7 +13,7 @@ RUN pip install google-search-results
 
 # RUN pip install gunicorn[gevent]
 
-EXPOSE 5000 
+EXPOSE 8000 
 # Upgrade pip
 WORKDIR /app 
 # Make /app as a working directory in the container

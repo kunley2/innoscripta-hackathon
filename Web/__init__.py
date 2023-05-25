@@ -7,7 +7,7 @@ load_dotenv()
 
 def create_app():
     app = Flask(__name__)
-    key = os.getenv("SECRET_KEY")
+    key = "kunle_manel-flask234ffrdf"
     app.config['SECRET_KEY'] = key
     app.register_blueprint(views,url_prefix='/')
     return app

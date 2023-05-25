@@ -15,7 +15,7 @@ load_dotenv()
 from langchain import OpenAI, SerpAPIWrapper, LLMChain
 
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key = "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"
 
 os.environ["SERPAPI_API_KEY"] = "3ecbf05c8be8ee4d8f17efef348854f1922f61ee30462f53c6f400ac3466a2cd"
 
@@ -118,7 +118,7 @@ def lang_model(company,country,openai_key=openai_api_key):
     output_parser = CustomOutputParser()
 
     #setup llm
-    os.environ["OPENAI_API_KEY"] = openai_key
+    os.environ["OPENAI_API_KEY"] = "openai_key"
 
     llm = OpenAI(temperature=0)
 
