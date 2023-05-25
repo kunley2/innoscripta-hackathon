@@ -16,6 +16,7 @@ from langchain import OpenAI, SerpAPIWrapper, LLMChain
 
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
+print(openai_api_key)
 
 os.environ["SERPAPI_API_KEY"] = os.getenv('SERP_API_KEY')
 
