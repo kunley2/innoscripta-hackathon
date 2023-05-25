@@ -12,7 +12,6 @@ def index():
         company = request.form.get('company')
         country = request.form.get('country')
         link = request.form.get('link')
-        result = {'overview':f'{company}index','products':'trendteon'}
     return render_template('index.html')
 
 
