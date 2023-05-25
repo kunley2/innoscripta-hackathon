@@ -8,4 +8,4 @@
 ## Running using Docker
 - To use docker please install docker desktop
 - Use the command docker build -t [name of the container image] .
-- Run docker run -p 5000:5000 -e [environment variable=value] [container name]
+- Run docker run -p 8000:8000 -e [environment variable=value] [container name] or docker run -p 8000:8000 --env-file [path_to_env_file] [container_name]
