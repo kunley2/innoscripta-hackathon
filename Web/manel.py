@@ -18,10 +18,13 @@ from langchain import OpenAI, GoogleSearchAPIWrapper, LLMChain
 os.environ["GOOGLE_CSE_ID"] = "d401c14d00fb84085"
 os.environ["GOOGLE_API_KEY"] = "AIzaSyB8L0bfzt1stmY2kddYi9Rb3HFIrEk1Pmk"
 
+openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 print(openai_api_key)
-
+os.environ["GOOGLE_CSE_ID"] = os.getenv('GOOGLE_CSE_ID')
+os.environ["GOOGLE_API_KEY"] = os.getenv('GOOGLE_API_KEY')
 #os.environ["SERPAPI_API_KEY"] = os.getenv('SERP_API_KEY')
 
 # Define which tools the agent can use to answer user queries
