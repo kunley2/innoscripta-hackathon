@@ -15,8 +15,8 @@ load_dotenv()
 from langchain import OpenAI, SerpAPIWrapper, LLMChain
 from langchain import OpenAI, GoogleSearchAPIWrapper, LLMChain
 #os.environ["OPENAI_API_KEY"] = "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"
-os.environ["GOOGLE_CSE_ID"] = "d401c14d00fb84085"
-os.environ["GOOGLE_API_KEY"] = "AIzaSyB8L0bfzt1stmY2kddYi9Rb3HFIrEk1Pmk"
+#os.environ["GOOGLE_CSE_ID"] = "d401c14d00fb84085"
+#os.environ["GOOGLE_API_KEY"] = "AIzaSyB8L0bfzt1stmY2kddYi9Rb3HFIrEk1Pmk"
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 openai_api_key = os.getenv("OPENAI_API_KEY")
