@@ -4,7 +4,7 @@ from fastapi.middleware.wsgi import WSGIMiddleware
 import uvicorn
 from Web.manel import lang_model
 from typing import Optional
-
+import os
 
 api = FastAPI()
 flask_app = create_app()
@@ -24,4 +24,4 @@ async def company(company:str,country:str,url:Optional[str]=None):
 api.mount('/',WSGIMiddleware(flask_app))
 
 if __name__ == '__main__':
-    uvicorn.run(api,host='0.0.0.0')
+    uvicorn.run(api,host='0.0.0.0',port=os.getenv("PORT"))
