@@ -137,8 +137,59 @@ def lang_model(company,country,openai_key,google_cse_id,google_api_key):
 
     agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=False, memory=memory)
     overview = agent_executor.run(f"A brief overview of the company {company} in {country}")
-    products = agent_executor.run("what are the main products or services of")
-    keywords = agent_executor.run("the most important keywords, return 'empty' if can't be found")
+    products = agent_executor.run(f"give me the main products or services associated to {company} in the country {country}")
+    keywords = agent_executor.run(f"the most important keywords strictly associated to {company} in the country {country}, make it short return 'empty' if can't be found")
+    # image = agent_executor.run("The image url, return 'empty' if can't be found")
+    # location = agent_executor.run("The location or address, return 'empty' if can't be found")
+    data = {
+        'overview':overview,
+        'products':products,
+        'keywords':keywords,
+        # 'image':image,
+        # 'address':location
+    }
+    return data
+
+def langchain_serp(company,country,openai_key):
+    search = SerpAPIWrapper()
+    tools = [
+        Tool(
+            name = "Search",
+            func=search.run,
+            description="useful for when you need to answer questions about current events"
+        )
+    ]
+    prompt_with_history = CustomPromptTemplate(
+    template=template_with_history,
+    tools=tools,
+    # This omits the `agent_scratchpad`, `tools`, and `tool_names` variables because those are generated dynamically
+    # This includes the `intermediate_steps` variable because that is needed
+    input_variables=["input", "intermediate_steps", "history"]
+    )
+    output_parser = CustomOutputParser()
+
+    #setup llm
+    os.environ["OPENAI_API_KEY"] = openai_key
+
+    llm = OpenAI(temperature=0)
+
+    # LLM chain consisting of the LLM and a prompt
+    llm_chain = LLMChain(llm=llm, prompt=prompt_with_history)
+
+    tool_names = [tool.name for tool in tools]
+    agent = LLMSingleActionAgent(
+        llm_chain=llm_chain, 
+        output_parser=output_parser,
+        stop=["\nObservation:"], 
+        allowed_tools=tool_names
+    )
+
+    memory=ConversationBufferWindowMemory(k=2)
+
+    agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=False, memory=memory)
+    overview = agent_executor.run(f"A brief overview of the company {company} in {country}")
+    products = agent_executor.run(f"give me the main products or services associated to {company} in the country {country}")
+    keywords = agent_executor.run(f"the most important keywords strictly associated to {company} in the country {country}, make it short return 'empty' if can't be found")
     # image = agent_executor.run("The image url, return 'empty' if can't be found")
     # location = agent_executor.run("The location or address, return 'empty' if can't be found")
     data = {
