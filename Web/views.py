@@ -9,6 +9,7 @@ load_dotenv()
 google_cse_id = os.getenv('GOOGLE_CSE_ID')
 google_api_key = os.getenv('GOOGLE_API_KEY')
 openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key_2 = os.getenv("OPENAI_API_KEY_2")
 os.environ["SERPAPI_API_KEY"] = os.getenv('SERP_API_KEY')
 
 # fake data
@@ -39,7 +40,7 @@ def out():
                                 openai_key=openai_api_key)
         except:
             result = lang_model(company=company,country=country,
-                                openai_key=openai_api_key,google_api_key=google_api_key,google_cse_id=google_cse_id)
+                                openai_key=openai_api_key_2,google_api_key=google_api_key,google_cse_id=google_cse_id)
         # result = {'overview':f'{company}','products':'brandteon'}
         # print(result)
     return render_template('output.html',result=result,company=company)
